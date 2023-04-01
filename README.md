@@ -8,7 +8,7 @@ Rails7 標準の scaffold に、以下機能を追加したテンプレートで
 - TomSelect による select 要素の選択肢絞り込み
 - Bootstrap5 によるスタイル付け
 
-TODO: ここに GIF アニメーションを貼る
+![ya-rails-template](https://user-images.githubusercontent.com/345832/229313913-8006e124-9425-466b-957b-f3d9a5b931eb.gif)
 
 
 ## 開発環境
@@ -115,8 +115,7 @@ BINDING=0.0.0.0 bin/dev
 Scaffold の例の通り、Item と Account を作成したとして話を進めます。
 
 `http://localhost:3000/accounts` にアクセスすると、次の図のように、検索フォーム付きの一覧画面が表示されます。
-
-TODO: ここにスクリーンショットを貼る
+![ya-rails-template](https://user-images.githubusercontent.com/345832/229313930-bc7d49e7-1e40-44b4-85d2-646cad58397a.png)
 
 気に入らない挙動があれば、生成されたコードを修正してください。
 
