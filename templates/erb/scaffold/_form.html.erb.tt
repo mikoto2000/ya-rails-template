@@ -1,0 +1,42 @@
+<%%= form_with(model: <%= model_resource_name %>, html: { class: ['form-control', 'form-control-sm'] }) do |form| %>
+  <%% if <%= singular_table_name %>.errors.any? %>
+    <div style="color: red">
+      <h2><%%= pluralize(<%= singular_table_name %>.errors.count, "error") %> prohibited this <%= singular_table_name %> from being saved:</h2>
+
+      <ul>
+        <%% <%= singular_table_name %>.errors.each do |error| %>
+          <li><%%= error.full_message %></li>
+        <%% end %>
+      </ul>
+    </div>
+  <%% end %>
+
+<% attributes.each do |attribute| -%>
+  <div>
+<% if attribute.password_digest? -%>
+    <%%= form.label :password, style: "display: block" %>
+    <%%= form.password_field :password, class: ['form-control', 'form-control-sm'] %>
+  </div>
+
+  <div>
+    <%%= form.label :password_confirmation, style: "display: block" %>
+    <%%= form.password_field :password_confirmation, class: ['form-control', 'form-control-sm'] %>
+<% elsif attribute.attachments? -%>
+    <%%= form.label :<%= attribute.column_name %>, style: "display: block"'] %>
+    <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, multiple: true, class: ['form-control', 'form-control-sm'] %>
+<% else -%>
+  <%- if attribute.reference? -%>
+    <%%= form.label <%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).foreign_key %>
+    <%%= form.collection_select <%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).foreign_key, <%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).klass.all, :id, :name, {include_blank: '選択なし'} %>
+  <%- else -%>
+    <%%= form.label :<%= attribute.column_name %>, style: "display: block" %>
+    <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, class: ['form-control', 'form-control-sm'] %>
+  <%- end -%>
+<% end -%>
+  </div>
+
+<% end -%>
+  <div>
+    <%%= form.submit class: ['btn', 'btn-primary'] %>
+  </div>
+<%% end %>
