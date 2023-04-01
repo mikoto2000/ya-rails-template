@@ -290,15 +290,22 @@ after_bundle do
   tom_select_str = <<~'EOS'
 
   import TomSelect from "tom-select"
-  
+
+  // TODO: TomSelect 実行タイミング整理
   window.addEventListener('load', function() {
     document.querySelectorAll('select').forEach((e) => {
+      if (!e.tomselect) {
         new TomSelect(e, { field: 'text', direction: 'asc'});
+      }
     });
   })
-  document.addEventListener('turbo:render', function() {
+
+  // TODO: TomSelect 実行タイミング整理
+  document.addEventListener('turbo:load', function() {
     document.querySelectorAll('select').forEach((e) => {
+      if (!e.tomselect) {
         new TomSelect(e, { field: 'text', direction: 'asc'});
+      }
     });
   })
   EOS
