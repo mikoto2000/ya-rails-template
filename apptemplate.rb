@@ -323,5 +323,116 @@ after_bundle do
   EOS
   File.write(Pathname.new('app').join('assets').join('stylesheets').join('application.bootstrap.scss').to_s, tom_select_style_str, mode: "a")
 
+  # 全ページ共通の JavaScript を配置
+  ya_common_js_code = <<~'EOS'
+  /**
+   * 要素の詳細画面へ遷移(Enterキーでの遷移)
+   */
+  export function handleEnterKeypressListItem(event, target, url) {
+    if (event.key === "Enter") {
+      handleClick(event, target, url)
+    }
+  }
+  /**
+   * 要素の詳細画面へ遷移
+   */
+  export function handleClickListItem(event, target, url) {
+    // 文字列選択動作でなければクリック処理発火
+    let selection = String(document.getSelection());
+    if (!selection || selection.length === 0) {
+      window.location = url;
+    }
+  }
+  /**
+   * 削除ボタンを押下した際に、 tr のクリックイベントが発火しないようにする
+   */
+  export function handleDeleteListItem(event, target) {
+    event.stopPropagation();
+  }
+  /**
+   * form 内の submit, reset 以外の入力欄を空にする
+   */
+  export function clear_form(event) {
+    event.preventDefault(false);
+    // input, select のクリア
+    event.currentTarget.form.querySelectorAll('input:not([type=submit]):not([type=reset]):not([type=hidden]), select').forEach((e) => {
+      e.value = '';
+    });
+    // TomSelect の表示要素クリア
+    event.currentTarget.form.querySelectorAll('.ts-control > div[data-ts-item]').forEach((e) => {
+      e.textContent = '';
+    });
+  }
 
+  /* turbo frame を利用した検索をすると、クエリ文字列がアドレスバーに反映されないため自分で反映させる */
+  window.addEventListener('load', function() {
+    const turboFrame = document.getElementById('list');
+    if (turboFrame) {
+      turboFrame.addEventListener('turbo:frame-load', (event) => {
+        const url = new URL(event.currentTarget.src);
+        window.history.pushState({ path: url.toString() }, '', url.toString());
+      });
+    }
+
+    const pagyItemsSelector = document.getElementById('pagy-items-selector')?.querySelector('input');
+    if (pagyItemsSelector) {
+      // 表示を 3 桁に固定
+      pagyItemsSelector.style.width = '3em';
+      // search_form_for では、クエリパラメーターが `<form の name 属性>[<パラメーター名>]` になっているが、
+      // これだと pagy のページングに使えないため、 `<パラメーター名>` の形式に無理やり変更
+      document.getElementById('f-items').name = 'items';
+      pagyItemsSelector.addEventListener('change', (event) => {
+        handleOnChangePagyItemsSelectorJs(event.currentTarget);
+      });
+    }
+  });
+
+  /* pagy_items_selector_js で生成された input 要素から数値を取得し、 1 ページごとの要素数を更新する */
+  export function updateItemPerPage() {
+    event.preventDefault(false);
+
+    const pagyItemsSelector = document.getElementById('pagy-items-selector');
+    const itemPerPage = pagyItemsSelector.querySelector('input').value;
+
+    // 現在の URL を取得
+    const url = new URL(window.location);
+
+    // url から現在のクエリ文字列を取得
+    const params = new URLSearchParams(url.search);
+
+    // pagy_items_selector_js で指定された値に上書き
+    params.set('items', itemPerPage);
+
+    // 新 URL の作成
+    const newUrl = url.origin + url.pathname + '?' + params.toString()
+
+    // Turbo Frames のフレームを取得
+    const turboFrame = document.getElementById('list');
+    turboFrame.src = newUrl;
+  };
+
+  /* pagy_items_selector_js で生成された input 要素が更新されたら、 form の hidden 要素に反映する */
+  export function handleOnChangePagyItemsSelectorJs(currentTarget) {
+    const itemPerPage = currentTarget.value;
+
+    // itemPerPage を隠しフォームに反映
+    const hiddenFormForItemPerPage = document.getElementById('f-items');
+    hiddenFormForItemPerPage.value = itemPerPage;
+  };
+
+  EOS
+  File.write(Pathname.new('app').join('javascript').join('ya-common.js').to_s, ya_common_js_code, mode: "a")
+
+  ya_common_js_import_code = <<~'EOS'
+
+  // 行儀が悪いが、グローバルに展開してしまう
+  import { handleEnterKeypressListItem, handleClickListItem, handleDeleteListItem, clear_form, updateItemPerPage, handleOnChangePagyItemsSelectorJs } from "./ya-common"
+  window.handleEnterKeypressListItem = handleEnterKeypressListItem;
+  window.handleClickListItem = handleClickListItem;
+  window.handleDeleteListItem = handleDeleteListItem;
+  window.clear_form = clear_form;
+  window.updateItemPerPage = updateItemPerPage;
+  window.handleOnChangePagyItemsSelectorJs = handleOnChangePagyItemsSelectorJs;
+  EOS
+  File.write(Pathname.new('app').join('javascript').join('application.js').to_s, ya_common_js_import_code, mode: "a")
 end
