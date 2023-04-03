@@ -14,7 +14,7 @@
       <!-- <%= attribute.type.to_s %> -->
 <% if attribute.reference? -%>
         <%%= f.label (<%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).foreign_key + '_in').to_s %>
-        <%%= f.collection_select (<%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).foreign_key + '_in').to_s, <%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).klass.all, :id, :name, {include_blank: '選択なし'}, { :multiple => true } %>
+        <%%= f.collection_select (<%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).foreign_key + '_in').to_s, <%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).klass.all, :id, :name, {}, { :multiple => true } %>
 <% else -%>
 <% if attribute.name == "id" -%>
         <%%= f.label :<%= attribute.name %>_eq %>
