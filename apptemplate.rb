@@ -359,8 +359,8 @@ after_bundle do
       e.value = '';
     });
     // TomSelect の表示要素クリア
-    event.currentTarget.form.querySelectorAll('.ts-control > div[data-ts-item]').forEach((e) => {
-      e.textContent = '';
+    event.currentTarget.form.querySelectorAll('.tomselected').forEach((e) => {
+      e.tomselect.clear();
     });
   }
 
