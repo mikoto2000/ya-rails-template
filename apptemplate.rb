@@ -295,7 +295,15 @@ after_bundle do
   window.addEventListener('load', function() {
     document.querySelectorAll('select').forEach((e) => {
       if (!e.tomselect) {
-        new TomSelect(e, { field: 'text', direction: 'asc'});
+        new TomSelect(e, {
+          plugins: {
+            remove_button: {
+              title:'Remove this item',
+            }
+          },
+          field: 'text',
+          direction: 'asc'
+        });
       }
     });
   })
@@ -304,7 +312,15 @@ after_bundle do
   document.addEventListener('turbo:load', function() {
     document.querySelectorAll('select').forEach((e) => {
       if (!e.tomselect) {
-        new TomSelect(e, { field: 'text', direction: 'asc'});
+        new TomSelect(e, {
+          plugins: {
+            remove_button: {
+              title:'Remove this item',
+            }
+          },
+          field: 'text',
+          direction: 'asc'
+        });
       }
     });
   })
