@@ -11,31 +11,59 @@
     </div>
   <%% end %>
 
+  <%%- if request.path_info.include?('edit') %>
+  <div>
+    <%%= form.label :id, style: "display: block" %>
+    <div class="ps-2">
+      <%%= form.number_field :id, class: ['form-control', 'form-control-sm'], disabled: true %>
+    </div>
+  <div>
+  <%%- end %>
 <% attributes.each do |attribute| -%>
   <div>
 <% if attribute.password_digest? -%>
     <%%= form.label :password, style: "display: block" %>
-    <%%= form.password_field :password, class: ['form-control', 'form-control-sm'] %>
+    <div class="ps-2">
+      <%%= form.password_field :password, class: ['form-control', 'form-control-sm'] %>
+    </div>
   </div>
 
   <div>
     <%%= form.label :password_confirmation, style: "display: block" %>
-    <%%= form.password_field :password_confirmation, class: ['form-control', 'form-control-sm'] %>
+    <div class="ps-2">
+      <%%= form.password_field :password_confirmation, class: ['form-control', 'form-control-sm'] %>
+    </div>
 <% elsif attribute.attachments? -%>
     <%%= form.label :<%= attribute.column_name %>, style: "display: block"'] %>
-    <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, multiple: true, class: ['form-control', 'form-control-sm'] %>
+    <div class="ps-2">
+      <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, multiple: true, class: ['form-control', 'form-control-sm'] %>
+    </div>
 <% else -%>
   <%- if attribute.reference? -%>
     <%%= form.label <%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).foreign_key %>
-    <%%= form.collection_select <%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).foreign_key, <%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).klass.all, :id, :name, {include_blank: '選択なし'} %>
+    <div class="ps-2">
+      <%%= form.collection_select <%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).foreign_key, <%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).klass.all, :id, :name, {include_blank: '選択なし'} %>
+    </div>
   <%- else -%>
     <%%= form.label :<%= attribute.column_name %>, style: "display: block" %>
-    <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, class: ['form-control', 'form-control-sm'] %>
+    <div class="ps-2">
+      <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, class: ['form-control', 'form-control-sm'] %>
+    </div>
   <%- end -%>
 <% end -%>
-  </div>
 
 <% end -%>
+<%% if request.path_info.include?('edit') %>
+    <%%= form.label :created_at, style: "display: block" %>
+    <div class="ps-2">
+      <%%= form.datetime_field :created_at, class: ['form-control', 'form-control-sm'], disabled: true %>
+    </div>
+    <%%= form.label :updated_at, style: "display: block" %>
+    <div class="ps-2">
+      <%%= form.datetime_field :updated_at, class: ['form-control', 'form-control-sm'], disabled: true %>
+    </div>
+  </div>
+<%% end -%>
   <div>
     <%%= form.submit class: ['btn', 'btn-primary'] %>
   </div>
