@@ -1,3 +1,6 @@
+<div style="display: flex;flex-direction: column;height: 100vh;">
+
+<header>
 <p style="color: green"><%%= notice %></p>
 
 <h1><%= human_name.pluralize %><%%= link_to '', <%= new_helper(type: :path) %>, class: ['bi', 'bi-plus-circle-fill', 'ms-2'] %></h1>
@@ -82,13 +85,14 @@
     </div>
   </div>
 </div>
+</header>
 
 
-
+<main style="flex-grow: 1;flex-shrink: 1;overflow-y: auto;">
 <%%= turbo_frame_tag "list" do %>
-<div id="<%= plural_table_name %>" class="table-responsive text-nowrap">
-  <table class="table table-hover">
-    <thead>
+<div id="<%= plural_table_name %>" class="text-nowrap">
+  <table class="table table-hover text-nowrap">
+    <thead class="table-light sticky-top">
       <th><%%= sort_link(@q, :id, default_order: :asc, class: 'd-block') %></th>
   <%- attributes.reject(&:password_digest?).each do |attribute| -%>
       <th><%%= sort_link(@q, :<%= attribute.column_name %>, default_order: :asc, class: 'd-block') %></th>
@@ -118,10 +122,13 @@
     </tbody>
   </table>
 </div>
-<%%== pagy_bootstrap_nav(@pagy) %>
+<div>
+  <%%== pagy_bootstrap_nav(@pagy) %>
+  <%%== pagy_items_selector_js(@pagy, item_name: '<%= human_name %>'.pluralize(@pagy.count), pagy_id: 'pagy-items-selector') %>
+  <%%= link_to 'Update <%= human_name %> per page', 'javascript:void(0);', onClick: 'updateItemPerPage()' %>
+</div>
 <%% end %>
-<%%== pagy_items_selector_js(@pagy, item_name: '<%= human_name %>'.pluralize(@pagy.count), pagy_id: 'pagy-items-selector') %>
-<%%= link_to 'Update <%= human_name %> per page', 'javascript:void(0);', onClick: 'updateItemPerPage()' %>
+</main>
 
 <script type="text/javascript">
 document.addEventListener('turbo:load', function() {
