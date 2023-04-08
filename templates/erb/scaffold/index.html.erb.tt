@@ -86,7 +86,7 @@
 
 
 <%%= turbo_frame_tag "list" do %>
-<div id="<%= plural_table_name %>">
+<div id="<%= plural_table_name %>" class="table-responsive text-nowrap">
   <table class="table table-hover">
     <thead>
       <th><%%= sort_link(@q, :id, default_order: :asc, class: 'd-block') %></th>
