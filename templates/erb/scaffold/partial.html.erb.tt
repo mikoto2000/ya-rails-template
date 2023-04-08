@@ -1,5 +1,13 @@
 <div id="<%%= dom_id <%= singular_name %> %>">
   <table class="table table-hover">
+    <tr>
+      <td>
+        <strong>Id:</strong>
+      </td>
+      <td>
+        <%%= <%= singular_name %>.id %>
+      </td>
+    </tr>
 <%- attributes.reject(&:password_digest?).each do |attribute| -%>
     <tr>
       <td>
@@ -22,5 +30,21 @@
       </td>
     </tr>
 <% end -%>
+    <tr>
+      <td>
+        <strong>Created at:</strong>
+      </td>
+      <td>
+        <%%= <%= singular_name %>.created_at %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Updated at:</strong>
+      </td>
+      <td>
+        <%%= <%= singular_name %>.updated_at %>
+      </td>
+    </tr>
   </table>
 </div>
