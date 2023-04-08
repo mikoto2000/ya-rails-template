@@ -9,38 +9,72 @@
     </h2>
     <div id="search-form" class="panel panel-default accordion-collapse collapse" aria-labelledby="headingOne">
 <%%= search_form_for @q, html: { class: ['form-control', 'form-control-sm'], data: { turbo_frame: "list" } } do |f| -%>
+      <div>
+        <%%= f.label :id_eq %>
+        <div class="ps-2">
+          <%%= f.number_field :id_eq, class: ['form-control', 'form-control-sm'] %>
+        </div>
+      </div>
 <% attributes.reject(&:password_digest?).each do |attribute| -%>
       <div>
       <!-- <%= attribute.type.to_s %> -->
-<% if attribute.reference? -%>
+  <%- if attribute.reference? -%>
         <%%= f.label (<%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).foreign_key + '_in').to_s %>
-        <%%= f.collection_select (<%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).foreign_key + '_in').to_s, <%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).klass.all, :id, :name, {}, { :multiple => true } %>
-<% else -%>
-<% if attribute.name == "id" -%>
+        <div class="ps-2">
+          <%%= f.collection_select (<%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).foreign_key + '_in').to_s, <%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).klass.all, :id, :name, {}, { :multiple => true } %>
+        </div>
+  <%- else -%>
+    <%- if attribute.name == "id" -%>
         <%%= f.label :<%= attribute.name %>_eq %>
-        <%%= f.search_field :<%= attribute.name %>_eq, class: ['form-control', 'form-control-sm'] %>
-<% elsif attribute.type.to_s == "integer" -%>
+        <div class="ps-2">
+          <%%= f.search_field :<%= attribute.name %>_eq, class: ['form-control', 'form-control-sm'] %>
+        </div>
+    <%- elsif attribute.type.to_s == "integer" -%>
         <%%= f.label :<%= attribute.name %> %>
-        <%%= f.number_field :<%= attribute.name %>_gteq, class: ['form-control', 'form-control-sm'] %>
-        ～
-        <%%= f.number_field :<%= attribute.name %>_lteq, class: ['form-control', 'form-control-sm'] %>
-<% elsif attribute.type.to_s == "timestamp" -%>
+        <div class="ps-2">
+          <%%= f.number_field :<%= attribute.name %>_gteq, class: ['form-control', 'form-control-sm'] %>
+          ～
+          <%%= f.number_field :<%= attribute.name %>_lteq, class: ['form-control', 'form-control-sm'] %>
+        </div>
+    <%- elsif attribute.type.to_s == "timestamp" -%>
         <%%= f.label :<%= attribute.name %> %>
-        <%%= f.datetime_field :<%= attribute.name %>_gteq, class: ['form-control', 'form-control-sm'] %>
-        ～
-        <%%= f.datetime_field :<%= attribute.name %>_lteq_end_of_minute, class: ['form-control', 'form-control-sm'] %>
-<% elsif attribute.type.to_s == "date" -%>
+        <div class="ps-2">
+          <%%= f.datetime_field :<%= attribute.name %>_gteq, class: ['form-control', 'form-control-sm'] %>
+          ～
+          <%%= f.datetime_field :<%= attribute.name %>_lteq_end_of_minute, class: ['form-control', 'form-control-sm'] %>
+        </div>
+    <%- elsif attribute.type.to_s == "date" -%>
         <%%= f.label :<%= attribute.name %> %>
-        <%%= f.date_field :<%= attribute.name %>_gteq, class: ['form-control', 'form-control-sm'] %>
-        ～
-        <%%= f.date_field :<%= attribute.name %>_lteq_end_of_day, class: ['form-control', 'form-control-sm'] %>
-<% else -%>
+        <div class="ps-2">
+          <%%= f.date_field :<%= attribute.name %>_gteq, class: ['form-control', 'form-control-sm'] %>
+          ～
+          <%%= f.date_field :<%= attribute.name %>_lteq_end_of_day, class: ['form-control', 'form-control-sm'] %>
+        </div>
+    <%- else -%>
         <%%= f.label :<%= attribute.name %>_cont %>
-        <%%= f.search_field :<%= attribute.name %>_cont, class: ['form-control', 'form-control-sm'] %>
-<% end -%>
-<% end -%>
+        <div class="ps-2">
+          <%%= f.search_field :<%= attribute.name %>_cont, class: ['form-control', 'form-control-sm'] %>
+        </div>
+    <%- end -%>
+  <%- end -%>
       </div>
 <% end -%>
+      <div>
+        <%%= f.label :created_at %>
+        <div class="ps-2">
+          <%%= f.datetime_field :created_at_gteq, class: ['form-control', 'form-control-sm'] %>
+          ～
+          <%%= f.datetime_field :created_at_lteq_end_of_minute, class: ['form-control', 'form-control-sm'] %>
+        </div>
+      </div>
+      <div>
+        <%%= f.label :updated_at %>
+        <div class="ps-2">
+          <%%= f.datetime_field :updated_at_gteq, class: ['form-control', 'form-control-sm'] %>
+          ～
+          <%%= f.datetime_field :updated_at_lteq_end_of_minute, class: ['form-control', 'form-control-sm'] %>
+        </div>
+      </div>
       <%%= f.hidden_field :items, id:'f-items' , value: params[:items] %>
       <%%= f.submit class: ['btn', 'btn-primary'] %>
       <input type="reset" class="btn btn-primary" onclick="clear_form(arguments[0], this)" value="clear"></input>
@@ -55,14 +89,18 @@
 <div id="<%= plural_table_name %>">
   <table class="table table-hover">
     <thead>
+      <th><%%= sort_link(@q, :id, default_order: :asc, class: 'd-block') %></th>
   <%- attributes.reject(&:password_digest?).each do |attribute| -%>
       <th><%%= sort_link(@q, :<%= attribute.column_name %>, default_order: :asc, class: 'd-block') %></th>
   <%- end -%>
+      <th><%%= sort_link(@q, :created_at, default_order: :asc, class: 'd-block') %></th>
+      <th><%%= sort_link(@q, :updated_at, default_order: :asc, class: 'd-block') %></th>
       <th>Operation</th>
     </thead>
     <tbody>
   <%%- @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
       <tr tabindex="0" role="button" onkeypress="handleEnterKeypressListIten(arguments[0], this, '<%%= url_target(nil, <%= singular_name %>).to_s %>')" onclick="handleClickListItem(arguments[0], this, '<%%= url_target(nil, <%= singular_name %>).to_s %>')">
+        <td><%%= <%= singular_name %>.id %></td>
   <%- attributes.reject(&:password_digest?).each do |attribute| -%>
     <%- if attribute.reference? -%>
         <td><%%= <%= singular_name %>.<%= attribute.name.underscore %>.name %></td>
@@ -70,6 +108,8 @@
         <td><%%= <%= singular_name %>.<%= attribute.column_name %> %></td>
     <%- end -%>
   <%- end -%>
+        <td><%%= <%= singular_name %>.created_at %></td>
+        <td><%%= <%= singular_name %>.updated_at %></td>
         <td>
           <%%= button_to "Delete", <%= model_resource_name(singular_table_name) %>, method: :delete, tabindex: 0, class: ['btn', 'btn-primary'], onclick: 'handleDeleteListItem(arguments[0], this)', data: { turbo_confirm: "Are you sure delete id: #{<%= singular_name %>.id}?" } %>
         </td>

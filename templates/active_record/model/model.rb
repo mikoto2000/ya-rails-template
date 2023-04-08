@@ -7,7 +7,7 @@ class <%= plural_table_name.classify %> < ApplicationRecord
         else
           e.name
         end
-      }.to_s
+      }.concat(["id", "created_at", "updated_at"]).to_s
     %>
   end
 
