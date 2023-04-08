@@ -17,6 +17,7 @@ class <%= controller_class_name %>Controller < ApplicationController
         .all
 <%- end -%>
     @q = @<%= plural_table_name %>.ransack(params[:q])
+    @q.sorts = 'id asc' if @q.sorts.empty?
     @pagy, @<%= plural_table_name %> = pagy(@q.result, page: params[:page], items: params[:items])
   end
 
