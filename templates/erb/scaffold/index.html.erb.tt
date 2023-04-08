@@ -83,3 +83,11 @@
 <%%== pagy_items_selector_js(@pagy, item_name: '<%= human_name %>'.pluralize(@pagy.count), pagy_id: 'pagy-items-selector') %>
 <%%= link_to 'Update <%= human_name %> per page', 'javascript:void(0);', onClick: 'updateItemPerPage()' %>
 
+<script type="text/javascript">
+document.addEventListener('turbo:load', function() {
+  setupTomSelectForMultiSelect();
+});
+document.addEventListener('turbo:render', function() {
+  setupTomSelectForMultiSelect();
+});
+</script>

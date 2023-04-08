@@ -291,25 +291,18 @@ after_bundle do
 
   import TomSelect from "tom-select"
 
-  // TODO: TomSelect 実行タイミング整理
-  window.addEventListener('load', function() {
+  window.setupTomSelectForSingleSelect = function setupTomSelectForSingleSelect() {
     document.querySelectorAll('select').forEach((e) => {
       if (!e.tomselect) {
         new TomSelect(e, {
-          plugins: {
-            remove_button: {
-              title:'Remove this item',
-            }
-          },
           field: 'text',
           direction: 'asc'
         });
       }
     });
-  })
+  }
 
-  // TODO: TomSelect 実行タイミング整理
-  document.addEventListener('turbo:load', function() {
+  window.setupTomSelectForMultiSelect = function setupTomSelectForSingleSelect() {
     document.querySelectorAll('select').forEach((e) => {
       if (!e.tomselect) {
         new TomSelect(e, {
@@ -323,7 +316,8 @@ after_bundle do
         });
       }
     });
-  })
+  }
+
   EOS
   File.write(Pathname.new('app').join('javascript').join('application.js').to_s, tom_select_str, mode: "a")
 
@@ -449,6 +443,7 @@ after_bundle do
   window.clear_form = clear_form;
   window.updateItemPerPage = updateItemPerPage;
   window.handleOnChangePagyItemsSelectorJs = handleOnChangePagyItemsSelectorJs;
+
   EOS
   File.write(Pathname.new('app').join('javascript').join('application.js').to_s, ya_common_js_import_code, mode: "a")
 end
