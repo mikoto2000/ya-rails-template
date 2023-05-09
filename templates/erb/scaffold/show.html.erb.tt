@@ -1,6 +1,6 @@
 <p style="color: green"><%%= notice %></p>
 
-<h1><%= human_name.pluralize %></h1>
+<h1><%%= <%= human_name %>.model_name.human %></h1>
 
 <%%= render @<%= singular_table_name %> %>
 

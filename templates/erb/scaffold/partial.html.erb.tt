@@ -11,7 +11,9 @@
 <%- attributes.reject(&:password_digest?).each do |attribute| -%>
     <tr>
       <td>
-        <strong><%= attribute.human_name %>:</strong>
+        <strong>
+          <%%= <%= human_name %>.human_attribute_name('<%= attribute.column_name %>'.to_sym) %>
+        </strong>
       </td>
       <td>
 <% if attribute.attachment? -%>
@@ -32,7 +34,9 @@
 <% end -%>
     <tr>
       <td>
-        <strong>Created at:</strong>
+        <strong>
+          <%%= <%= human_name %>.human_attribute_name(:created_at) %>
+        </strong>
       </td>
       <td>
         <%%= <%= singular_name %>.created_at %>
@@ -40,7 +44,9 @@
     </tr>
     <tr>
       <td>
-        <strong>Updated at:</strong>
+        <strong>
+          <%%= <%= human_name %>.human_attribute_name(:updated_at) %>
+        </strong>
       </td>
       <td>
         <%%= <%= singular_name %>.updated_at %>
