@@ -20,7 +20,6 @@
         </div>
       <%- attributes.reject(&:password_digest?).each do |attribute| -%>
         <div>
-        <!-- <%= attribute.type.to_s %> -->
         <%- if attribute.reference? -%>
           <%%= f.label (<%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).foreign_key + '_in').to_s %>
           <div class="ps-2">
