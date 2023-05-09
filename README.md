@@ -96,7 +96,7 @@ end
 以下コマンドで、マイグレーションを実行してください。
 
 ```sh
-rake db:migrate
+rails db:migrate
 ```
 
 
