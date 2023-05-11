@@ -8,7 +8,7 @@
   <div class="accordion">
     <div class="accordion-item">
       <h2 class="accordion-header" id="search-form-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#search-form" aria-expanded="false" aria-controls="search-form" ><%%= t("index.search_condition") %></button>
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#search-form" aria-expanded="false" aria-controls="search-form" ><%%= t("view.index.search_condition") %></button>
       </h2>
       <div id="search-form" class="panel panel-default accordion-collapse collapse" aria-labelledby="headingOne">
 <%%= search_form_for @q, html: { class: ['form-control', 'form-control-sm'], data: { turbo_frame: "list" } } do |f| -%>
@@ -97,7 +97,7 @@
     <%- end -%>
         <th><%%= sort_link(@q, :created_at, default_order: :asc, class: 'd-block') %></th>
         <th><%%= sort_link(@q, :updated_at, default_order: :asc, class: 'd-block') %></th>
-        <th><%%= t("index.operation") %></th>
+        <th><%%= t("view.index.operation") %></th>
       </thead>
       <tbody>
     <%%- @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
