@@ -7,6 +7,7 @@ Rails7 標準の scaffold に、以下機能を追加したテンプレートで
 - Pagy によるページング
 - TomSelect による select 要素の選択肢絞り込み
 - Bootstrap5 によるスタイル付け
+- i18n 対応
 
 ![ya-rails-template](https://user-images.githubusercontent.com/345832/229313913-8006e124-9425-466b-957b-f3d9a5b931eb.gif)
 
@@ -99,6 +100,29 @@ end
 rails db:migrate
 ```
 
+### 必要に応じて辞書ファイルを編集
+
+`config/locales` に、各言語毎の辞書ファイルが格納されているので、必要に応じて文字列の修正をしてください。
+
+モデル名や、モデルの属性名を日本語化する場合、 `config/locales/ja.yml` へ、以下のように `activerecord/models`, `activerecord/attributes` 以下に文字列の定義を追加してください。
+
+例: `config/locales/ja.yml` を編集
+
+```
+...(snip)
+ja:
+  ...(snip)
+  activerecord:
+    models:
+      account: アカウント
+    attributes:
+      account:
+        name: 名前
+        role_id: 権限
+        expiration_date: 期限
+        created_at: 作成日
+        updated_at: 更新日
+```
 
 ## 動作確認
 
@@ -134,7 +158,7 @@ mikoto2000 <mikoto2000@gmail.com>
 
 ## TODO
 
-- [ ] : i18n
+- [x] : i18n
 - [ ] : JavaScript の組み込み方の改善
 
 ## 参考資料(ググったモノたち)
@@ -186,6 +210,14 @@ mikoto2000 <mikoto2000@gmail.com>
     - [RailsでモデルのインスタンスからURLのパスを取得する仕組み](https://zenn.dev/pofkuma/articles/7eaaf9cbc60c42)
     - [Railsで「複数カラム」かつ「共通テーブル」にアソシエーション(1対多・多対多・自己結合) - Qiita](https://qiita.com/RoaaaA/items/7f541509a1e2528e65a4)
 
+- i18n
+    - [Rails 国際化（i18n）API - Railsガイド](https://railsguides.jp/i18n.html)
+    - [Railsのモデル名.human_attribute_name(:カラム名)って何だっけ？ - カクカクしかじか](https://fuqda.hatenablog.com/entry/2019/04/07/212254)
+    - [RailsのI18nで引数 - blog.takuyan.com](https://takuyan.hatenablog.com/entry/20111120/1321741426)
+    - [【Rails】error prohibited this user from being saved:のエラーメッセージがi18nで日本語化されない - Qiita](https://qiita.com/blackpeach7/items/f3a0b321fcbab771dabf)
+
 - その他こまごました Tips
     - [railsのlink_toでjavascript:voidやonclickを使う方法 - Qiita](https://qiita.com/ogaaryo/items/bdae9521d5a5ae831f1a)
+    - [Railsで簡単に英単語を複数形にする方法 - Qiita](https://qiita.com/narikei/items/023dbf1385e798836ae8)
+
 
