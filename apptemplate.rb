@@ -1,7 +1,11 @@
 gem "pagy"
 gem "ransack"
 
+# ya-rails-template を利用するように設定
 application "config.templates = './lib/templates'"
+
+# デフォルトロケールを日本語に変更
+application "config.i18n.default_locale = :ja"
 
 pagy_rb = <<'EOS'
 # frozen_string_literal: true
@@ -446,4 +450,7 @@ after_bundle do
 
   EOS
   File.write(Pathname.new('app').join('javascript').join('application.js').to_s, ya_common_js_import_code, mode: "a")
+
+  # 辞書ファイルのコピー
+FileUtils.cp(Dir.glob(Pathname.new(File.expand_path(File.dirname(__FILE__))).join('config').join('locales').join('*').to_s), Pathname.new('config').join('locales').to_s)
 end
