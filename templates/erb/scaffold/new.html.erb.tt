@@ -5,7 +5,7 @@
 <br>
 
 <div>
-  <%%= link_to "Back to <%= human_name.pluralize.downcase %>", <%= index_helper(type: :path) %> %>
+  <%%= link_to t("view.new.move_to_index", model: <%= human_name %>.model_name.human.pluralize), <%= index_helper(type: :path) %> %>
 </div>
 
 <script type="text/javascript">
