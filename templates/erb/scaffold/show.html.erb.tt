@@ -5,8 +5,8 @@
 <%%= render @<%= singular_table_name %> %>
 
 <div>
-  <%%= link_to "Edit this <%= human_name.downcase %>", <%= edit_helper(type: :path) %> %> |
-  <%%= link_to "Back to <%= human_name.pluralize.downcase %>", <%= index_helper(type: :path) %> %>
+  <%%= link_to t("view.show.move_to_update", model: <%= human_name %>.model_name.human), <%= edit_helper(type: :path) %> %> |
+  <%%= link_to t("view.show.move_to_index", model: <%= human_name %>.model_name.human.pluralize), <%= index_helper(type: :path) %> %>
 
   <%%= button_to t("helpers.submit.delete"), <%= model_resource_name(prefix: "@") %>, method: :delete, class: ['btn', 'btn-primary'], data: { turbo_confirm: t('helpers.dialog.delete', id: @<%= singular_name %>.id) } %>
 </div>
