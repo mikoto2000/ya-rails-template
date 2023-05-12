@@ -1,7 +1,11 @@
 gem "pagy"
 gem "ransack"
 
+# ya-rails-template を利用するように設定
 application "config.templates = './lib/templates'"
+
+# デフォルトロケールを日本語に変更
+application "config.i18n.default_locale = :ja"
 
 pagy_rb = <<'EOS'
 # frozen_string_literal: true
@@ -246,7 +250,7 @@ Pagy::DEFAULT[:overflow] = :last_page    # default  (other options: :last_page a
 # I18n extra: uses the standard i18n gem which is ~18x slower using ~10x more memory
 # than the default pagy internal i18n (see above)
 # See https://ddnexus.github.io/pagy/docs/extras/i18n
-# require 'pagy/extras/i18n'
+require 'pagy/extras/i18n'
 
 # Default i18n key
 # Pagy::DEFAULT[:i18n_key] = 'pagy.item_name'   # default
@@ -446,4 +450,7 @@ after_bundle do
 
   EOS
   File.write(Pathname.new('app').join('javascript').join('application.js').to_s, ya_common_js_import_code, mode: "a")
+
+  # 辞書ファイルのコピー
+FileUtils.cp(Dir.glob(Pathname.new(File.expand_path(File.dirname(__FILE__))).join('config').join('locales').join('*').to_s), Pathname.new('config').join('locales').to_s)
 end
