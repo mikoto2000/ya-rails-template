@@ -1,5 +1,4 @@
 <h1><%%= t("view.new.title", model: <%= human_name %>.model_name.human) %></h1>
-
 <%%= render "form", <%= singular_table_name %>: @<%= singular_table_name %> %>
 
 <br>
@@ -9,10 +8,10 @@
 </div>
 
 <script type="text/javascript">
-document.addEventListener('turbo:load', function() {
-  setupTomSelectForSingleSelect();
-});
-document.addEventListener('turbo:render', function() {
-  setupTomSelectForSingleSelect();
-});
+  document.addEventListener('turbo:load', function() {
+    setupTomSelectForSingleSelect();
+  });
+  document.addEventListener('turbo:render', function() {
+    setupTomSelectForSingleSelect();
+  });
 </script>
