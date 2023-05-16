@@ -57,7 +57,7 @@ rails new app --css=bootstrap -m ./apptemplate.rb -d postgresql
 development:
   <<: *default
   host: postgres
-  database: postgres
+  database: public
   username: admin
   password: password
 ```
