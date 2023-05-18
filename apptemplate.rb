@@ -462,7 +462,10 @@ after_bundle do
   File.write(Pathname.new('app').join('javascript').join('application.js').to_s, ya_common_js_import_code, mode: "a")
 
   # 辞書ファイルのコピー
-  FileUtils.cp(Dir.glob(Pathname.new(File.expand_path(File.dirname(__FILE__))).join('config').join('locales').join('*').to_s), Pathname.new('config').join('locales').to_s)
+  locales_from = Dir.glob(Pathname.new(File.expand_path(File.dirname(__FILE__))).join('config').join('locales').join('*').to_s)
+  locales_to = Pathname.new('config').join('locales').to_s
+  puts "copy locales from: #{locales_from}, to: #{locales_to}"
+  FileUtils.cp(locales_from, locales_to)
 
   # dotfile のコピー
   dotfiles_from = Dir.glob(Pathname.new(File.expand_path(File.dirname(__FILE__))).join('dotfile').join('.*').to_s, File::FNM_DOTMATCH).reject { |e| e =~ /\.{1,2}$/ }
