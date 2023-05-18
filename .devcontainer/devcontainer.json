@@ -6,14 +6,18 @@
     "service": "app",
     "workspaceFolder": "/work",
 
-    "settings": {
-        "telemetry.enableCrashReporter": false,
-        "telemetry.enableTelemetry": false,
-        "editor.copyWithSyntaxHighlighting": false,
-        "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-    },
-
-    "extensions": []
-
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "telemetry.telemetryLevel": "off",
+                "telemetry.enableTelemetry": false,
+                "editor.copyWithSyntaxHighlighting": false,
+                "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue"
+            },
+            "extensions": [
+                "walkme.ruby-extension-pack"
+            ]
+        }
+    }
 }
 
