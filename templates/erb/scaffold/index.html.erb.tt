@@ -116,11 +116,15 @@
       <%- if attribute.reference? -%>
           <td><%%= <%= singular_name %>.<%= attribute.name.underscore %>.name %></td>
       <%- else -%>
+        <%- if attribute.type.to_s == "timestamp" || attribute.type.to_s == "date" -%>
+          <td><%%= <%= singular_name %>.<%= attribute.column_name %> && l(<%= singular_name %>.<%= attribute.column_name %>) %></td>
+        <%- else -%>
           <td><%%= <%= singular_name %>.<%= attribute.column_name %> %></td>
+        <%- end -%>
       <%- end -%>
     <%- end -%>
-          <td><%%= <%= singular_name %>.created_at %></td>
-          <td><%%= <%= singular_name %>.updated_at %></td>
+          <td><%%= <%= singular_name %>.created_at && l(<%= singular_name %>.created_at) %></td>
+          <td><%%= <%= singular_name %>.updated_at && l(<%= singular_name %>.updated_at) %></td>
           <td>
             <%%= button_to t("helpers.submit.delete"), <%= model_resource_name(singular_table_name) %>, method: :delete, tabindex: 0, class: ['btn', 'btn-primary'], onclick: 'handleDeleteListItem(arguments[0], this)', data: { turbo_confirm: t('helpers.dialog.delete', id: <%= singular_name %>.id) } %>
           </td>

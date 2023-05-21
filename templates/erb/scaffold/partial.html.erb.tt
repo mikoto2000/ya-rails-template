@@ -26,7 +26,11 @@
     <%- if attribute.reference? -%>
         <%%= <%= singular_name %>.<%= attribute.name.underscore %>.name %>
     <%- else -%>
+      <%- if attribute.type.to_s == "timestamp" || attribute.type.to_s == "date" -%>
+        <%%= <%= singular_name %>.<%= attribute.column_name %> && l(<%= singular_name %>.<%= attribute.column_name %>) %>
+      <%- else -%>
         <%%= <%= singular_name %>.<%= attribute.column_name %> %>
+      <%- end -%>
     <%- end -%>
   <%- end -%>
       </td>
@@ -39,7 +43,7 @@
         </strong>
       </td>
       <td>
-        <%%= <%= singular_name %>.created_at %>
+        <%%= <%= singular_name %>.created_at && l(<%= singular_name %>.created_at) %>
       </td>
     </tr>
     <tr>
@@ -49,7 +53,7 @@
         </strong>
       </td>
       <td>
-        <%%= <%= singular_name %>.updated_at %>
+        <%%= <%= singular_name %>.updated_at && l(<%= singular_name %>.updated_at) %>
       </td>
     </tr>
   </table>

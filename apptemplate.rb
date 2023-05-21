@@ -4,8 +4,10 @@ gem "ransack"
 # ya-rails-template を利用するように設定
 application "config.templates = './lib/templates'"
 
-# デフォルトロケールを日本語に変更
+# デフォルトロケール・タイムゾーンを日本に変更
 application "config.i18n.default_locale = :ja"
+application "config.time_zone = 'Asia/Tokyo'"
+application "config.active_record.default_timezone = :local"
 
 pagy_rb = <<'EOS'
 # frozen_string_literal: true
