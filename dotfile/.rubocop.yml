@@ -4,6 +4,8 @@ require:
 AllCops:
   Exclude:
     - "Gemfile"
+    - "lib/templates/**/*"
+    - "vendor/**/*"
     - "bin/**/*"
     - "config/**/*"
     - "lib/templates/**/*"
@@ -23,7 +25,6 @@ AllCops:
 Layout/IndentationConsistency:
   EnforcedStyle: indented_internal_methods
 
-# メソッド呼び出しが複数行になった場合のインデントは、
 # 直前行の先頭から 1 段インデントを下げる
 #
 #     ok: foo = bar.method1()
@@ -63,4 +64,3 @@ Style/FrozenStringLiteralComment:
 #     ng: 'text'
 Style/StringLiterals:
   EnforcedStyle: double_quotes
-
