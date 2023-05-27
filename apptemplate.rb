@@ -3,7 +3,11 @@ gem "ransack"
 
 gem "rubocop", group: "development"
 gem "rubocop-rails", group: "development"
-
+gem "rubocop-performance", group: "development"
+gem "rubocop-minitest", group: "development"
+gem "rubocop-i18n", group: "development"
+gem "rubocop-thread_safety", group: "development"
+ 
 # ya-rails-template を利用するように設定
 application "config.templates = './lib/templates'"
 

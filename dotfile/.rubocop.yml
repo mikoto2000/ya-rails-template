@@ -1,5 +1,11 @@
+inherit_from: .rubocop_todo.yml
+
 require:
   - rubocop-rails
+  - rubocop-performance
+  - rubocop-minitest
+  - rubocop-i18n
+  - rubocop-thread_safety
 
 AllCops:
   Exclude:
@@ -64,3 +70,7 @@ Style/FrozenStringLiteralComment:
 #     ng: 'text'
 Style/StringLiterals:
   EnforcedStyle: double_quotes
+
+# gettext は使わないので無効化する
+I18n/GetText:
+  Enabled: false
