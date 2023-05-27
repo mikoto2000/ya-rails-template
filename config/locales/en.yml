@@ -36,6 +36,13 @@ en:
   helpers:
     dialog:
       delete: "Are you sure delete id: %{id}?"
+  controller:
+    edit:
+      success: "%{model} was successfully updated."
+    create:
+      success: "%{model} was successfully created."
+    destroy:
+      success: "%{model} was successfully destroyed."
   view:
     index:
       update_item_per_page: Update %{model} per page

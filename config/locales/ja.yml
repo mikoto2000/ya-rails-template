@@ -44,6 +44,13 @@ ja:
       clear: クリア
     dialog:
       delete: "id: %{id} を、本当に削除しますか？"
+  controller:
+    edit:
+      success: "%{model} の更新に成功しました。"
+    create:
+      success: "%{model} の作成に成功しました。"
+    destroy:
+      success: "%{model} の削除に成功しました。"
   view:
     index:
       operation: 操作
