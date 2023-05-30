@@ -1,6 +1,13 @@
 gem "pagy"
 gem "ransack"
 
+gem "rubocop", group: "development"
+gem "rubocop-rails", group: "development"
+gem "rubocop-performance", group: "development"
+gem "rubocop-minitest", group: "development"
+gem "rubocop-i18n", group: "development"
+gem "rubocop-thread_safety", group: "development"
+ 
 # ya-rails-template を利用するように設定
 application "config.templates = './lib/templates'"
 
@@ -459,5 +466,14 @@ after_bundle do
   File.write(Pathname.new('app').join('javascript').join('application.js').to_s, ya_common_js_import_code, mode: "a")
 
   # 辞書ファイルのコピー
-FileUtils.cp(Dir.glob(Pathname.new(File.expand_path(File.dirname(__FILE__))).join('config').join('locales').join('*').to_s), Pathname.new('config').join('locales').to_s)
+  locales_from = Dir.glob(Pathname.new(File.expand_path(File.dirname(__FILE__))).join('config').join('locales').join('*').to_s)
+  locales_to = Pathname.new('config').join('locales').to_s
+  puts "copy locales from: #{locales_from}, to: #{locales_to}"
+  FileUtils.cp(locales_from, locales_to)
+
+  # dotfile のコピー
+  dotfiles_from = Dir.glob(Pathname.new(File.expand_path(File.dirname(__FILE__))).join('dotfile').join('.*').to_s, File::FNM_DOTMATCH).reject { |e| e =~ /\.{1,2}$/ }
+  dotfiles_to = Pathname.new('.').to_s
+  puts "copy dotfiles from: #{dotfiles_from}, to: #{dotfiles_to}"
+  FileUtils.cp(dotfiles_from, dotfiles_to)
 end
