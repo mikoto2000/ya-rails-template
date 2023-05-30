@@ -1,7 +1,7 @@
 <% module_namespacing do -%>
 class <%= controller_class_name %>Controller < ApplicationController
   include Pagy::Backend
-  before_action :set_<%= singular_table_name %>, only: %i[ show edit update destroy ]
+  before_action :set_<%= singular_table_name %>, only: %i[show edit update destroy]
 
   # GET <%= route_url %>
   def index
@@ -10,14 +10,14 @@ class <%= controller_class_name %>Controller < ApplicationController
 <%- attributes.reject(&:password_digest?).each do |attribute| -%>
   <%- if attribute.reference? -%>
     <%- ref_count += 1 -%>
-        .eager_load(:<%= attribute.name %>)
+      .eager_load(:<%= attribute.name %>)
   <%- end -%>
 <%- end -%>
 <%- if ref_count == 0 -%>
-        .all
+      .all
 <%- end -%>
     @q = @<%= plural_table_name %>.ransack(params[:q])
-    @q.sorts = 'id asc' if @q.sorts.empty?
+    @q.sorts = "id asc" if @q.sorts.empty?
     @pagy, @<%= plural_table_name %> = pagy(@q.result, page: params[:page], items: params[:items])
   end
 
@@ -61,15 +61,16 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_<%= singular_table_name %>
       @<%= singular_table_name %> = <%= plural_table_name.classify %>
 <% attributes.reject(&:password_digest?).each do |attribute| -%>
   <%- if attribute.reference? -%>
-          .eager_load(:<%= attribute.name %>)
+        .eager_load(:<%= attribute.name %>)
   <%- end -%>
 <% end -%>
-          .find(params[:id])
+        .find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
