@@ -136,7 +136,7 @@
   <div>
     <%%== pagy_bootstrap_nav(@pagy) %>
     <%%== pagy_items_selector_js(@pagy, item_name: '<%= human_name %>'.pluralize(@pagy.count), pagy_id: 'pagy-items-selector') %>
-    <%%= link_to t("view.index.update_item_per_page", model: "<%= human_name %>"), 'javascript:void(0);', onClick: 'updateItemPerPage()' %>
+    <%%= link_to t("view.index.update_item_per_page", model: "<%= human_name %>"), 'javascript:void(0);', onClick: 'updateItemPerPage(arguments[0], this)' %>
   </div>
 <%% end %>
   </main>
