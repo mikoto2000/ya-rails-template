@@ -65,6 +65,8 @@
     <div class="ps-2">
       <%%= form.datetime_field :created_at, class: ['form-control', 'form-control-sm'], disabled: true %>
     </div>
+  </div>
+  <div>
     <%%= form.label :updated_at, style: "display: block" %>
     <div class="ps-2">
       <%%= form.datetime_field :updated_at, class: ['form-control', 'form-control-sm'], disabled: true %>
