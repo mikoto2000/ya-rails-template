@@ -27,8 +27,8 @@
           </div>
         </div>
     <%- else -%>
-        <div>
       <%- if attribute.name == "id" -%>
+        <div>
           <%%= f.label :<%= attribute.name %>_eq %>
           <div class="ps-2">
             <%%= f.search_field :<%= attribute.name %>_eq, class: ['form-control', 'form-control-sm'] %>
