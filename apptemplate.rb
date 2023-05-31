@@ -16,6 +16,10 @@ application "config.i18n.default_locale = :ja"
 application "config.time_zone = 'Asia/Tokyo'"
 application "config.active_record.default_timezone = :local"
 
+application(nil, env: "development") do
+  "config.hosts = /.*/"
+end
+
 pagy_rb = <<'EOS'
 # frozen_string_literal: true
 
