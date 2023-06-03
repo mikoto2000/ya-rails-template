@@ -11,7 +11,7 @@
   </div>
   <%%- end -%>
 
-  <%%- if request.path_info.include?('edit') -%>
+  <%%- if request.path_info.include?("edit") -%>
   <div>
     <%%= form.label :id, style: "display: block" %>
     <div class="ps-2">
@@ -36,7 +36,7 @@
   </div>
     <%- elsif attribute.attachments? -%>
   <div>
-    <%%= form.label :<%= attribute.column_name %>, style: "display: block"'] %>
+    <%%= form.label :<%= attribute.column_name %>, style: "display: block"] %>
     <div class="ps-2">
       <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, multiple: true, class: %w[form-control form-control-sm] %>
     </div>
@@ -46,7 +46,13 @@
   <div>
     <%%= form.label <%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).foreign_key %>
     <div class="ps-2">
-      <%%= form.collection_select <%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).foreign_key, <%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).klass.all, :id, :name, {include_blank: '選択なし'} %>
+      <%%= form.collection_select(
+            <%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).foreign_key,
+            <%= plural_table_name.classify %>.reflect_on_association(:<%= attribute.name %>).klass.all,
+            :id,
+            :name,
+            { include_blank: "選択なし" }
+          ) %>
     </div>
   </div>
       <%- else -%>
@@ -59,7 +65,7 @@
       <%- end -%>
     <%- end -%>
   <%- end -%>
-  <%%- if request.path_info.include?('edit') %>
+  <%%- if request.path_info.include?("edit") %>
   <div>
     <%%= form.label :created_at, style: "display: block" %>
     <div class="ps-2">
