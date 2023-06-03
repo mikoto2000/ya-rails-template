@@ -7,7 +7,8 @@ gem "rubocop-performance", group: "development"
 gem "rubocop-minitest", group: "development"
 gem "rubocop-i18n", group: "development"
 gem "rubocop-thread_safety", group: "development"
- 
+gem "erb_lint", :github => 'mikoto2000/erb-lint', ref: '9ef15e20da0ad46077c88b73bac06e4edd15d2c2'
+
 # ya-rails-template を利用するように設定
 application "config.templates = './lib/templates'"
 
