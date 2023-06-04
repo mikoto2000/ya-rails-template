@@ -304,43 +304,12 @@ after_bundle do
   require 'fileutils'
   FileUtils.cp_r(Pathname.new(__dir__).join('templates').to_s, Pathname.new('lib').join('templates').to_s)
 
-  # TomSelect 用のスクリプトを、 application.js へ追記
+  # Select 初期化用のスクリプトを、 application.js へ追記
   tom_select_str = <<~'EOS'
 
-  import TomSelect from "tom-select"
-
-  window.setupTomSelectForSingleSelect = function setupTomSelectForSingleSelect() {
-    document.querySelectorAll('select').forEach((e) => {
-      if (!e.tomselect) {
-        new TomSelect(e, {
-          plugins: {
-            remove_button: {
-              title:'Remove this item',
-            }
-          },
-          field: 'text',
-          direction: 'asc'
-        });
-      }
-    });
-  }
-
-  window.setupTomSelectForMultiSelect = function setupTomSelectForSingleSelect() {
-    document.querySelectorAll('select').forEach((e) => {
-      if (!e.tomselect) {
-        new TomSelect(e, {
-          plugins: {
-            remove_button: {
-              title:'Remove this item',
-            }
-          },
-          field: 'text',
-          direction: 'asc'
-        });
-      }
-    });
-  }
-
+  // 行儀が悪いが、 HTML から直接 select 初期化関数を呼び出せるように、副作用付きインポートを行う
+  // (windows オブジェクト直下に select 初期化関数をぶら下げる)
+  import "./select-initializer"
   EOS
   File.write(Pathname.new('app').join('javascript').join('application.js').to_s, tom_select_str, mode: "a")
 
