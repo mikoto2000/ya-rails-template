@@ -61,8 +61,14 @@ Style/Documentation:
 Style/EmptyMethod:
   EnforcedStyle: expanded
 
+# Rails の生成するコードが追加していないので無効化
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+# Rails が生成するスキーマが年月日ごとにアンダーバーを入れた数字リテラルを使っているので、それを除外
+Style/NumericLiterals:
+  Exclude:
+    - db/schema.rb
 
 # 文字列リテラルはダブルクオーテーションで囲む
 #
@@ -70,6 +76,20 @@ Style/FrozenStringLiteralComment:
 #     ng: 'text'
 Style/StringLiterals:
   EnforcedStyle: double_quotes
+
+### test 関連
+
+Metrics/ClassLength:
+  Exclude:
+    - test/**/*
+
+# グループとしてひと塊にしたい assert があるので、無効化
+Minitest/EmptyLineBeforeAssertionMethods:
+  Enabled: false
+
+# 多くなりがちなので妥協の無効化
+Minitest/MultipleAssertions:
+  Enabled: false
 
 # gettext は使わないので無効化する
 I18n/GetText:
