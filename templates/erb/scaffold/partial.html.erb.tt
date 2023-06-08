@@ -12,7 +12,7 @@
     <tr>
       <td>
         <strong>
-          <%%= <%= human_name %>.human_attribute_name(:<%= attribute.column_name %>) %>
+          <%%= <%= class_name %>.human_attribute_name(:<%= attribute.column_name %>) %>
         </strong>
       </td>
       <td>
@@ -39,7 +39,7 @@
     <tr>
       <td>
         <strong>
-          <%%= <%= human_name %>.human_attribute_name(:created_at) %>
+          <%%= <%= class_name %>.human_attribute_name(:created_at) %>
         </strong>
       </td>
       <td>
@@ -49,7 +49,7 @@
     <tr>
       <td>
         <strong>
-          <%%= <%= human_name %>.human_attribute_name(:updated_at) %>
+          <%%= <%= class_name %>.human_attribute_name(:updated_at) %>
         </strong>
       </td>
       <td>
