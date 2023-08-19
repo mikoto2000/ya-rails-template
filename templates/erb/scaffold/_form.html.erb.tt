@@ -11,7 +11,7 @@
   </div>
   <%%- end -%>
 
-  <%%- if request.path_info.include?("edit") -%>
+  <%%- if <%= singular_table_name %>.persisted? -%>
   <div>
     <%%= form.label :id, style: "display: block" %>
     <div class="ps-2">
@@ -65,7 +65,7 @@
       <%- end -%>
     <%- end -%>
   <%- end -%>
-  <%%- if request.path_info.include?("edit") %>
+  <%%- if <%= singular_table_name %>.persisted? -%>
   <div>
     <%%= form.label :created_at, style: "display: block" %>
     <div class="ps-2">
