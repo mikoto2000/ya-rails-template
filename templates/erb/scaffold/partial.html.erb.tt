@@ -26,7 +26,7 @@
     <%- if attribute.reference? -%>
         <%%= <%= singular_name %>.<%= attribute.name.underscore %>.name %>
     <%- else -%>
-      <%- if attribute.type.to_s == "timestamp" || attribute.type.to_s == "date" -%>
+      <%- if attribute.type.to_s == "timestamp" || attribute.type.to_s == "datetime" || attribute.type.to_s == "date" -%>
         <%%= <%= singular_name %>.<%= attribute.column_name %> && l(<%= singular_name %>.<%= attribute.column_name %>) %>
       <%- else -%>
         <%%= <%= singular_name %>.<%= attribute.column_name %> %>

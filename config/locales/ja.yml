@@ -36,6 +36,9 @@ ja:
   time:
     formats:
       default: "%Y/%m/%d %H:%M:%S %Z"
+  datetime:
+    formats:
+      default: "%Y/%m/%d %H:%M:%S %Z"
   helpers:
     submit:
       create: 作成

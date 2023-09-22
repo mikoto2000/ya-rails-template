@@ -56,7 +56,7 @@
             <%%= f.number_field :<%= attribute.name %>_lteq, class: %w[form-control form-control-sm] %>
           </div>
         </div>
-      <%- elsif attribute.type.to_s == "timestamp" -%>
+      <%- elsif attribute.type.to_s == "timestamp" || attribute.type.to_s == "datetime" -%>
         <div>
           <%%= f.label :<%= attribute.name %> %>
           <div class="ps-2">
@@ -137,7 +137,7 @@
       <%- if attribute.reference? -%>
           <td><%%= <%= singular_name %>.<%= attribute.name.underscore %>.name %></td>
       <%- else -%>
-        <%- if attribute.type.to_s == "timestamp" || attribute.type.to_s == "date" -%>
+        <%- if attribute.type.to_s == "timestamp" || attribute.type.to_s == "datetime" || attribute.type.to_s == "date" -%>
           <td><%%= <%= singular_name %>.<%= attribute.column_name %> && l(<%= singular_name %>.<%= attribute.column_name %>) %></td>
         <%- else -%>
           <td><%%= <%= singular_name %>.<%= attribute.column_name %> %></td>
