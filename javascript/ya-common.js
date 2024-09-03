@@ -58,13 +58,13 @@ export function handleEnterKeypressListItem(event, target, url) {
   
   /* pagy_items_selector_js の幅を 3 桁に固定する */
   function changePagyItemsSelectorWidth() {
-    const pagyItemsSelector = document.getElementById('pagy-items-selector')?.querySelector('input');
+    const pagyItemsSelector = document.getElementById('pagy-limit-selector')?.querySelector('input');
     if (pagyItemsSelector) {
       // 表示を 3 桁に固定
       pagyItemsSelector.style.width = '3em';
       // search_form_for では、クエリパラメーターが `<form の name 属性>[<パラメーター名>]` になっているが、
       // これだと pagy のページングに使えないため、 `<パラメーター名>` の形式に無理やり変更
-      document.getElementById('f-items').name = 'items';
+      document.getElementById('f-limit').name = 'limit';
       pagyItemsSelector.addEventListener('change', (event) => {
         handleOnChangePagyItemsSelectorJs(event.currentTarget);
       });
@@ -75,7 +75,7 @@ export function handleEnterKeypressListItem(event, target, url) {
   export function updateItemPerPage(event) {
     event.preventDefault(false);
   
-    const pagyItemsSelector = document.getElementById('pagy-items-selector');
+    const pagyItemsSelector = document.getElementById('pagy-limit-selector');
     const itemPerPage = pagyItemsSelector.querySelector('input').value;
   
     // 現在の URL を取得
@@ -85,7 +85,7 @@ export function handleEnterKeypressListItem(event, target, url) {
     const params = new URLSearchParams(url.search);
   
     // pagy_items_selector_js で指定された値に上書き
-    params.set('items', itemPerPage);
+    params.set('limit', itemPerPage);
   
     // 新 URL の作成
     const newUrl = url.origin + url.pathname + '?' + params.toString()
@@ -100,7 +100,7 @@ export function handleEnterKeypressListItem(event, target, url) {
     const itemPerPage = currentTarget.value;
   
     // itemPerPage を隠しフォームに反映
-    const hiddenFormForItemPerPage = document.getElementById('f-items');
+    const hiddenFormForItemPerPage = document.getElementById('f-limit');
     hiddenFormForItemPerPage.value = itemPerPage;
   };
   
