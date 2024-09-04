@@ -38,15 +38,6 @@ after_bundle do
   require 'fileutils'
   FileUtils.cp_r(Pathname.new(__dir__).join('templates').to_s, Pathname.new('lib').join('templates').to_s)
 
-  # Select 初期化用のスクリプトを、 application.js へ追記
-  tom_select_str = <<~'EOS'
-
-  // 行儀が悪いが、 HTML から直接 select 初期化関数を呼び出せるように、副作用付きインポートを行う
-  // (windows オブジェクト直下に select 初期化関数をぶら下げる)
-  import "./select-initializer"
-  EOS
-  File.write(Pathname.new('app').join('javascript').join('application.js').to_s, tom_select_str, mode: "a")
-
   # TomSelect 用のスタイルシートを、 application.bootstrap.scss へ追記
   tom_select_style_str = <<~'EOS'
 
@@ -79,6 +70,42 @@ after_bundle do
 
   EOS
   File.write(Pathname.new('app').join('javascript').join('application.js').to_s, ya_common_js_import_code, mode: "a")
+
+  # TomSelect を importmap に登録
+  File.write(Pathname.new('config').join('importmap.rb').to_s, 'pin "tom-select", to: "https://cdn.jsdelivr.net/npm/tom-select@2/dist/js/tom-select.complete.min.js"', mode: "a")
+
+  # TomSelect の初期化処理を application.js に追記
+  tomselect_init_code = <<~'EOS'
+
+  import "tom-select";
+
+  function initTomSelect() {
+    document.querySelectorAll('select').forEach((e) => {
+      if (!e.tomselect) {
+        new TomSelect(e, {
+          plugins: {
+            remove_button: {
+              title:'Remove this item',
+            }
+          },
+          field: 'text',
+          direction: 'asc'
+        });
+      }
+    });
+  }
+
+  document.addEventListener('turbo:load', () => {
+    initTomSelect();
+  });
+
+  document.addEventListener('turbo:render', () => {
+    initTomSelect();
+  });
+
+  EOS
+  File.write(Pathname.new('app').join('javascript').join('application.js').to_s, tomselect_init_code, mode: "a")
+
 
   # 辞書ファイルのコピー
   locales_from = Dir.glob(Pathname.new(File.expand_path(File.dirname(__FILE__))).join('config').join('locales').join('*').to_s)

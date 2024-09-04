@@ -6,12 +6,3 @@
 <div>
   <%%= link_to t("view.new.move_to_index", model: <%= class_name %>.model_name.human.pluralize), <%= index_helper(type: :path) %> %>
 </div>
-
-<script type="text/javascript">
-  document.addEventListener('turbo:load', function() {
-    setupTomSelectForSingleSelect();
-  });
-  document.addEventListener('turbo:render', function() {
-    setupTomSelectForSingleSelect();
-  });
-</script>
