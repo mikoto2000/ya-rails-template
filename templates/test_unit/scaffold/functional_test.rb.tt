@@ -26,7 +26,7 @@ class <%= controller_class_name %>ControllerTest < ActionDispatch::IntegrationTe
 <%- attributes.each do |attribute| -%>
   <%- if attribute.reference? -%>
   test "should get index search <%= attribute.name %>s" do
-    search_ids = [<%= table_name %>(:one).role_id, <%= table_name %>(:two).role_id]
+    search_ids = [<%= table_name %>(:one).<%= attribute.name %>, <%= table_name %>(:two).<%= attribute.name %>]
     get <%= index_helper(type: :url) %>, params: { q: { <%= attribute.name %>_id_in: search_ids } }
     assert_response :success
 
