@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 gem "pagy"
 gem "ransack"
 gem "rails-i18n"

@@ -146,7 +146,7 @@ Scaffold の例の通り、Item と Account を作成したとして話を進め
 
 ## License
 
-Copyright (C) 2023 mikoto2000
+Copyright (C) 2025 mikoto2000
 
 This software is released under the MIT License, see LICENSE
 
