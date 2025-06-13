@@ -54,6 +54,8 @@ after_bundle do
 
   # コピーした js に定義されている関数を使えるように application.js を修正
   ya_common_js_import_code = <<~'EOS'
+import TomSelect from "tom-select"
+
 /**
  * 要素の詳細画面へ遷移(Enterキーでの遷移)
  */
@@ -167,8 +169,6 @@ window.clear_form = clear_form;
 window.updateItemPerPage = updateItemPerPage;
 window.handleOnChangePagyItemsSelectorJs = handleOnChangePagyItemsSelectorJs;
 
-import * as TomSelect from "tom-select";
-
 export function initTomSelect() {
   document.querySelectorAll('select').forEach((e) => {
     if (!e.tomselect) {
@@ -198,7 +198,8 @@ document.addEventListener('turbo:render', () => {
   File.write(Pathname.new('app').join('javascript').join('application.js').to_s, ya_common_js_import_code, mode: "a")
 
   # TomSelect を importmap に登録
-  File.write(Pathname.new('config').join('importmap.rb').to_s, 'pin "tom-select", to: "https://cdn.jsdelivr.net/npm/tom-select@2/dist/js/tom-select.complete.min.js"', mode: "a")
+  system('./bin/importmap pin tom-select@2.3.0')
+
 
   # 辞書ファイルのコピー
   locales_from = Dir.glob(Pathname.new(File.expand_path(File.dirname(__FILE__))).join('config').join('locales').join('*').to_s)
