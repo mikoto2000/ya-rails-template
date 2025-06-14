@@ -1,6 +1,6 @@
-# ya rails template
+# YA Rails Template
 
-Rails7 標準の scaffold に、以下機能を追加したテンプレートです。
+Rails 7の標準scaffoldを拡張し、実用的なWebアプリケーション開発に必要な機能を追加したアプリケーションテンプレートです。
 
 - 一覧表示をテーブル化
 - Ransack による検索・ソート
@@ -44,7 +44,7 @@ rails new app --css=bootstrap -m ./apptemplate.rb -d postgresql
 ```
 
 - `--css=bootstrap`: **必須** 本テンプレートでは、 Bootstrap を利用しているため、必ず指定してください
-- `-m apptemplate.rb`: **必須** 本テンプレートで使用するライブラリの設定や、 scaffold ジェネレーターをプロジェクトに、適用するためのアプリケーションテンプレートスクリプトです。必ず指定してください
+- `-m apptemplate.rb`: **必須** 本テンプレートを適用するためのスクリプト
 - `-d postgresql` : 使用するデータベース。プロジェクトで使用するデータベースに応じて修正してください
 
 
@@ -108,7 +108,7 @@ rails db:migrate
 
 例: `config/locales/ja.yml` を編集
 
-```
+```yaml
 ...(snip)
 ja:
   ...(snip)
@@ -136,7 +136,7 @@ BINDING=0.0.0.0 bin/dev
 
 ### ブラウザでの確認
 
-Scaffold の例の通り、Item と Account を作成したとして話を進めます。
+Scaffold の例の通り、Role と Account を作成したとして話を進めます。
 
 `http://localhost:3000/accounts` にアクセスすると、次の図のように、検索フォーム付きの一覧画面が表示されます。
 ![ya-rails-template](https://user-images.githubusercontent.com/345832/229313930-bc7d49e7-1e40-44b4-85d2-646cad58397a.png)
@@ -159,7 +159,7 @@ mikoto2000 <mikoto2000@gmail.com>
 ## TODO
 
 - [x] : i18n
-- [ ] : JavaScript の組み込み方の改善
+- [ ] : Stimulus Controller導入によるJavaScript構造化
 
 ## 参考資料(ググったモノたち)
 
