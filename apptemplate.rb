@@ -10,7 +10,7 @@ gem "rubocop-performance", group: "development"
 gem "rubocop-minitest", group: "development"
 gem "rubocop-i18n", group: "development"
 gem "rubocop-thread_safety", group: "development"
-gem "erb_lint", :github => 'mikoto2000/erb-lint', ref: '9ef15e20da0ad46077c88b73bac06e4edd15d2c2'
+gem "erb_lint", group: "development"
 
 # ya-rails-template を利用するように設定
 application "config.templates = './lib/templates'"
@@ -53,8 +53,14 @@ after_bundle do
   File.write(Pathname.new('app').join('assets').join('stylesheets').join('application.bootstrap.scss').to_s, tom_select_style_str, mode: "a")
 
   # コピーした js に定義されている関数を使えるように application.js を修正
-  ya_common_js_import_code = File.read(Pathname.new(__dir__).join('javascript').join('ya-common.js'))
-  File.write(Pathname.new('app').join('javascript').join('application.js').to_s, ya_common_js_import_code, mode: "a")
+  FileUtils.cp(
+    Pathname.new(__dir__).join('javascript').join('ya-common.js').to_s,
+    Pathname.new('app').join('javascript').join('ya-common.js').to_s
+  )
+  File.write(Pathname.new('app').join('javascript').join('application.js').to_s, "\nimport 'ya-common'\n", mode: "a")
+
+  # ya-common を importmap に登録
+  File.write(Pathname.new('config').join('importmap.rb').to_s, 'pin "ya-common", to: "ya-common.js"' + "\n", mode: "a")
 
   # TomSelect を importmap に登録
   system('./bin/importmap pin tom-select@2.3.0')
