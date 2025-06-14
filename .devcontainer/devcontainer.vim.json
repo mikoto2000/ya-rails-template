@@ -11,6 +11,7 @@
     // "XDG_RUNTIME_DIR": "${localEnv:XDG_RUNTIME_DIR}",
     // "PULSE_SERVER": "${localEnv:PULSE_SERVER}",
   },
+  "postCreateCommand": "sudo npm install -g @anthropic-ai/claude-code",
   // devcontainer/cli はまだ forwardPorts に対応していないため、
   // 必要に応じて forwardPorts の定義を appPort に転記する。
   // "appPort" [
@@ -19,17 +20,22 @@
     {
       "type": "bind",
       "source": "${localEnv:HOME}/.vim",
-      "target": "/root/.vim"
+      "target": "/home/vscode/.vim"
     },
     {
       "type": "bind",
       "source": "${localEnv:HOME}/.gitconfig",
-      "target": "/root/.gitconfig"
+      "target": "/home/vscode/.gitconfig"
     },
     {
       "type": "bind",
       "source": "${localEnv:HOME}/.ssh",
-      "target": "/root/.ssh"
+      "target": "/home/vscode/.ssh"
+    },
+    {
+      "type": "bind",
+      "source": "${localEnv:HOME}/.claude.json",
+      "target": "/home/vscode/.claude.json"
     },
     // If use host's bashrc
     //{

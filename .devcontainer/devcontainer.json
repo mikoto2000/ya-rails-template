@@ -18,6 +18,9 @@
                 "walkme.ruby-extension-pack"
             ]
         }
+    },
+    "features": {
+      "ghcr.io/robbert229/devcontainer-features/postgresql-client:1": {},
     }
 }
 
